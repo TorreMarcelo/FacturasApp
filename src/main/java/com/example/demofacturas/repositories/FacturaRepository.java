@@ -26,5 +26,4 @@ import com.example.demofacturas.models.Factura;
 @Repository
 public interface FacturaRepository extends JpaRepository<Factura,String> {
 
-    public abstract List<Factura> findByCliente(String id);
 }

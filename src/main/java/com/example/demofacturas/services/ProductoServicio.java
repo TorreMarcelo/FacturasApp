@@ -10,22 +10,23 @@
 
 package com.example.demofacturas.services;
 
-import com.example.demofacturas.models.Detalle;
+import com.example.demofacturas.models.Producto;
 
 import java.util.List;
 
 /**
- * Esta clase representa al Servicio de Detalle y debe ser usada para almacenar
+ * Esta clase representa al Servicio de Producto y debe ser usada para almacenar
  * datos e intercambiarlos con otros objetos.
  *
  * @author Carlos Torre
  * @version 1, 09/02/2022
  *
  */
-public interface DetalleServicio {
 
-    List<Detalle> listarDetalles();
+public interface ProductoServicio {
 
-    Detalle registrarDetalle(Detalle detalle);
+    List<Producto> listarProductos();
+
+    Producto crearProducto(Producto producto);
 
 }

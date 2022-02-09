@@ -1,0 +1,60 @@
+ /*
+  * @(#)Cliente.java
+  *
+  * Copyright 2019 ZyTrust SA, Todos los derechos reservados.
+  * ZT PROPRIETARIO/CONFIDENTIALIDAD. Su uso está sujeto a los
+  * términos de la licencia adquirida a ZyTrust SA.
+  * No se permite modificar, copiar ni difundir sin autorización
+  * expresa de ZyTrust SA.
+  */
+package com.example.demofacturas.services;
+
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.example.demofacturas.models.Factura;
+import com.example.demofacturas.repositories.FacturaRepository;
+import org.springframework.transaction.annotation.Transactional;
+
+ /**
+  * Esta clase representa al Servicio de Factura y debe ser usada para almacenar
+  * datos e intercambiarlos con otros objetos.
+  *
+  * @author Carlos Torre
+  * @version 1, 07/02/2022
+  *
+  */
+@Service
+public class FacturaServiceImpl implements FacturaService {
+
+    @Autowired
+    /** Repositorio de factura con inyeccion de dependencia */
+    FacturaRepository facturaRepository;
+
+    /**
+    * Obtiene todas las facturas y las agrega a una lista.
+    *
+    * @return Retorna una lista Factura de todas las facturas
+    */
+    @Override
+    @Transactional(readOnly = true)
+    public List<Factura> listarFacturas(){
+        return facturaRepository.findAll();
+    }
+
+    /**
+    * Crea una nueva factura.
+    *
+    * @param factura objeto factura para su creacion
+    * @return Retorna un objeto factura
+    */
+    @Override
+    @Transactional
+    public Factura registrarFactura(Factura factura){
+        return facturaRepository.save(factura);
+    }
+
+
+
+}

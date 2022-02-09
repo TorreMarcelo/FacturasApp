@@ -12,12 +12,13 @@ package com.example.demofacturas.controllers;
 
 import java.net.URI;
 import java.util.List;
+
+import com.example.demofacturas.services.DetalleServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.demofacturas.models.Detalle;
-import com.example.demofacturas.services.DetalleServicio;
 
 
 /**
@@ -47,12 +48,12 @@ public class DetalleControlador {
     }
 
     /**
-     * Crea un nuevo detalle.
-     *
-     * @param detalle objeto detalle para su creacion
-     * @return Retorna un objeto detalle
-     * @throws Exception excepcion basica durante la creacion del detalle.
-     */
+    * Crea un nuevo detalle.
+    *
+    * @param detalle objeto detalle para su creacion
+    * @return Retorna un objeto detalle
+    * @throws Exception excepcion basica durante la creacion del detalle.
+    */
     @PostMapping
     private ResponseEntity<Detalle> registrarDetalle (@RequestBody Detalle detalle){
         try {

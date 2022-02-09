@@ -12,6 +12,8 @@ package com.example.demofacturas.controllers;
 
 import java.net.URI;
 import java.util.List;
+
+import com.example.demofacturas.services.FacturaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +21,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demofacturas.models.Factura;
-import com.example.demofacturas.services.FacturaService;
+import com.example.demofacturas.services.FacturaServiceImpl;
 
  /**
   * Esta clase representa al Controlodaor de Factura y debe ser usada para almacenar
@@ -67,10 +68,6 @@ public class FacturaController {
         }
     }
 
-    @GetMapping("query")
-    public ResponseEntity<List<Factura>> listarPorClienteId(@RequestParam("clienteId") String clienteId){
-        return ResponseEntity.ok(facturaService.listarPorClienteId(clienteId));
-    }
 
 
 }
