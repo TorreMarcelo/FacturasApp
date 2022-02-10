@@ -48,10 +48,6 @@ public class Factura {
     /** Numero identificador de la factura*/
     private String numeroId;
 
-    @Column(name="FACT_DIRECCION", nullable = true, length = 100)
-    /** Direccion de la factura*/
-    private String direccion;
-
     @Column(name="FACT_FECHA_EMISION", nullable = true)
     /** Fecha de Emision de la factura*/
     private LocalDate fechaEmision;
@@ -60,13 +56,13 @@ public class Factura {
     /** Fecha de Pago de la factura*/
     private LocalDate fechaPago;
 
-    @Column(name="FACT_TIPO_PAGO", nullable = true, length = 20)
-    /** Tipo de pago de la factura*/
-    private String tipoPago;
-
     @Column(name="FACT_ESTADO", nullable = true, length = 1)
     /** Estado de la factura*/
     private char estado;
+
+    @Column(name="FACT_SUBTOTAL", precision = 7, scale = 2, nullable = true)
+    /** subtotal de la factura*/
+    private BigDecimal subtotal;
 
     @Column(name="FACT_IMPORTE_TOTAL", precision = 7, scale = 2, nullable = true)
     /** Importe total de la factura*/
@@ -97,16 +93,6 @@ public class Factura {
         this.numeroId = numeroId;
     }
 
-    /** Obtiene la direccion de esta factura */
-    public String getDireccion() {
-        return direccion;
-    }
-
-    /** Establece el numero de identificacion de esta factura */
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
     /** Obtiene la fecha de emision de esta factura */
     public LocalDate getFechaEmision() {
         return fechaEmision;
@@ -127,24 +113,24 @@ public class Factura {
         this.fechaPago = fechaPago;
     }
 
-    /** Obtiene el tipo de pago de esta factura */
-    public String getTipoPago() {
-        return tipoPago;
-    }
-
-    /** Establece el numero de identificacion de esta factura */
-    public void setTipoPago(String tipoPago) {
-        this.tipoPago = tipoPago;
-    }
-
     /** Obtiene el estado de esta factura */
     public char getEstado() {
         return estado;
     }
 
-    /** Establece el numero de identificacion de esta factura */
+    /** Establece el estado de esta factura */
     public void setEstado(char estado) {
         this.estado = estado;
+    }
+
+    /** Obtiene el subtotal de esta factura */
+    public BigDecimal getSubtotal() {
+        return subtotal;
+    }
+
+    /** Establece el subtotal de esta factura */
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
     }
 
     /** Obtiene el importe de esta factura */
@@ -152,7 +138,7 @@ public class Factura {
         return importeTotal;
     }
 
-    /** Establece el numero de identificacion de esta factura */
+    /** Establece el importe de esta factura */
     public void setImporteTotal(BigDecimal importeTotal) {
         this.importeTotal = importeTotal;
     }
@@ -162,7 +148,7 @@ public class Factura {
         return impuesto;
     }
 
-    /** Establece el numero de identificacion de esta factura */
+    /** Establece el impuesto de esta factura */
     public void setImpuesto(BigDecimal impuesto) {
         this.impuesto = impuesto;
     }
@@ -172,17 +158,17 @@ public class Factura {
         return cliente;
     }
 
-    /** Establece el numero de identificacion de esta factura */
+    /** Establece el cliente a quien va dirigida esta factura */
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
-    /** Obtiene los deatlles de este factura */
+    /** Obtiene una lista de detalles de este factura */
     public List<Detalle> getDetalles() {
         return detalles;
     }
 
-    /** Establece el numero de identificacion de esta factura */
+    /** Establece una lista de detalles de esta factura */
     public void setDetalles(List<Detalle> detalles) {
         this.detalles = detalles;
     }
