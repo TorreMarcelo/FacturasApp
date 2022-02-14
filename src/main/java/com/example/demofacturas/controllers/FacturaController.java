@@ -13,6 +13,7 @@ package com.example.demofacturas.controllers;
 import java.net.URI;
 import java.util.List;
 
+import com.example.demofacturas.dtos.FacturaRequest;
 import com.example.demofacturas.services.FacturaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demofacturas.models.Factura;
-import com.example.demofacturas.services.FacturaServiceImpl;
 
  /**
   * Esta clase representa al Controlodaor de Factura y debe ser usada para almacenar
@@ -54,15 +54,25 @@ public class FacturaController {
     /**
     * Crea una nueva factura.
     *
-    * @param factura objeto factura para su creacion
+    * @param /*factura objeto factura para su creacion
     * @return Retorna un objeto factura
     * @throws Exception excepcion basica durante la creacion de la factura
     */
-    @PostMapping
+    /*@PostMapping
     private ResponseEntity<Factura> registrarFactura (@RequestBody Factura factura){
         try {
             Factura facturaCreada = facturaService.registrarFactura(factura);
             return ResponseEntity.created(new URI("/facturas/"+facturaCreada.getNumeroId())).body(facturaCreada);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }*/
+
+    @PostMapping
+    public ResponseEntity<Factura> crearFactura(@RequestBody FacturaRequest facturaReq) {
+        try {
+            Factura facturaCompleta = facturaService.crearFactura(facturaReq);
+            return ResponseEntity.created(new URI("/facturas/"+facturaCompleta.getNumeroId())).body(facturaCompleta);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

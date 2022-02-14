@@ -9,8 +9,18 @@
   */
 package com.example.demofacturas.services;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import com.example.demofacturas.dtos.DetalleFactura;
+import com.example.demofacturas.dtos.FacturaRequest;
+import com.example.demofacturas.exception.ZyTrustException;
+import com.example.demofacturas.models.Cliente;
+import com.example.demofacturas.models.Detalle;
+import com.example.demofacturas.util.CodigoError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.demofacturas.models.Factura;
@@ -31,6 +41,15 @@ public class FacturaServiceImpl implements FacturaService {
     @Autowired
     /** Repositorio de factura con inyeccion de dependencia */
     FacturaRepository facturaRepository;
+
+    @Autowired
+    ClienteServicio clienteServicio;
+
+    @Autowired
+    ProductoServicio productoServicio;
+
+    @Autowired
+    DetalleServicio detalleServicio;
 
     /**
     * Obtiene todas las facturas y las agrega a una lista.
@@ -56,5 +75,45 @@ public class FacturaServiceImpl implements FacturaService {
     }
 
 
+
+
+    public Factura crearFactura(FacturaRequest facturaRequest) {
+
+        Optional<Cliente> cliente = clienteServicio.getById(facturaRequest.getIdCliente());
+        if (cliente.isEmpty()){
+            throw new ZyTrustException(CodigoError.CLIENTE_NO_EXISTE);
+        }
+
+
+        //build factura
+        Factura facturaVacia = Factura
+                .builder()
+                .cliente(cliente.get())
+                .fechaEmision(LocalDate.now())
+                .fechaPago(LocalDate.now())
+                .estado('R')
+                .impuesto(new BigDecimal(0.00))
+                //.detalles(detalles)
+                .build();
+
+        //factura.setDetalles(detalles);
+
+        //datalles request
+        List<DetalleFactura> detallesRequest = new ArrayList<>();
+
+        //Lista de detalles
+        List<Detalle> detalles = new ArrayList<>();
+        facturaVacia.setSubtotal(detalleServicio.crearDetalle(facturaVacia, detallesRequest));
+
+        facturaVacia.setImpuesto(facturaVacia.getSubtotal().multiply(new BigDecimal(0.18)));
+
+        facturaVacia.setImporteTotal(facturaVacia.getSubtotal().add(facturaVacia.getImpuesto()));
+
+        Factura facturaGuardada = facturaRepository.save(facturaVacia);
+
+        return facturaGuardada;
+
+
+    }
 
 }

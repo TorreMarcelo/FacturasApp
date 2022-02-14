@@ -10,8 +10,11 @@
 
 package com.example.demofacturas.services;
 
+import com.example.demofacturas.dtos.DetalleFactura;
 import com.example.demofacturas.models.Detalle;
+import com.example.demofacturas.models.Factura;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -27,5 +30,7 @@ public interface DetalleServicio {
     List<Detalle> listarDetalles();
 
     Detalle registrarDetalle(Detalle detalle);
+
+    BigDecimal crearDetalle (Factura factura, List<DetalleFactura> detalles);
 
 }

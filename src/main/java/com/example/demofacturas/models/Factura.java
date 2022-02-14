@@ -24,6 +24,7 @@ import java.time.LocalDate;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -39,6 +40,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "FAC_FACTURAS")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Factura {
 
     @Id

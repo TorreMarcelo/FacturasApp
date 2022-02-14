@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Esta clase representa a la implemntacion de Servicio de Cliente
@@ -35,8 +36,11 @@ public class ClienteServicioImpl implements ClienteServicio {
         return clienteRepositorio.findAll();
     }
 
-
     public Cliente crearCliente(Cliente cliente){
         return clienteRepositorio.save(cliente);
+    }
+
+    public Optional<Cliente> getById(String id) {
+        return clienteRepositorio.findById(id);
     }
 }

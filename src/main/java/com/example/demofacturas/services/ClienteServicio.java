@@ -13,6 +13,7 @@ package com.example.demofacturas.services;
 import com.example.demofacturas.models.Cliente;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Esta clase representa al Servicio de Cliente y debe ser usada para almacenar
@@ -27,4 +28,6 @@ public interface ClienteServicio {
     List<Cliente> listarClientes();
 
     Cliente crearCliente(Cliente cliente);
+
+    Optional<Cliente> getById(String id);
 }

@@ -21,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
  /**
@@ -35,6 +36,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "FAC_PRODUCTOS_FACTURAS")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Detalle {
 
     @Id

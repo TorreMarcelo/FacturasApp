@@ -10,7 +10,15 @@
 
 package com.example.demofacturas.services;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
+
+import com.example.demofacturas.dtos.DetalleFactura;
+import com.example.demofacturas.exception.ZyTrustException;
+import com.example.demofacturas.models.Factura;
+import com.example.demofacturas.models.Producto;
+import com.example.demofacturas.util.CodigoError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.demofacturas.models.Detalle;
@@ -31,6 +39,9 @@ public class DetalleServicioImpl implements DetalleServicio {
     /** Repositorio de detalle con inyeccion de dependencia */
     DetalleRepositorio detalleRepositorio;
 
+    @Autowired
+    ProductoServicio productoServicio;
+
     /**
     * Obtiene todas los detalles y las agrega a una lista.
     *
@@ -49,4 +60,41 @@ public class DetalleServicioImpl implements DetalleServicio {
     public Detalle registrarDetalle(Detalle detalle){
         return detalleRepositorio.save(detalle);
     }
+
+
+    public BigDecimal crearDetalle (Factura factura, List<DetalleFactura> detalles){
+
+        BigDecimal subtotal = new BigDecimal("0.00");
+
+        for (DetalleFactura detalle : detalles) {
+
+            Optional<Producto> prod = productoServicio.getById(detalle.getProductoId());
+
+            if (prod.isEmpty()) {
+                //logger.info("No se encontro el producto con el id {}", detalle.getProductoId());
+                throw new ZyTrustException(CodigoError.PRODUCTO_NO_ExISTE);
+            }
+
+            Producto producto = prod.get();
+
+            Detalle detalledCreado= Detalle.builder()
+                    .factura(factura)
+                    .producto(producto)
+                    //.facturaId(factura.getFacturaId())
+                    //.productoId(producto.getProductoId())
+                    .cantidad(detalle.getCantidad())
+                    .importe(producto.getPrecioUnitario().multiply(BigDecimal.valueOf(detalle.getCantidad())))
+                    .build();
+
+            detalleRepositorio.save(detalledCreado);
+            //logger.debug("Se creo el detalle {}", detalleFactura.toString());
+            subtotal = subtotal.add(detalledCreado.getImporte()).stripTrailingZeros();
+        }
+        return subtotal;
+
+
+
+    }
+
+
 }

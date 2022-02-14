@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Esta clase representa a la implemntacion de Servicio de Producto
@@ -37,6 +38,10 @@ public class ProductoServicioImpl implements ProductoServicio{
 
     public Producto crearProducto(Producto producto){
         return productoRepositorio.save(producto);
+    }
+
+    public Optional<Producto> getById(String id) {
+        return productoRepositorio.findById(id);
     }
 
 }

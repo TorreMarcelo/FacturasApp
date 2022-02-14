@@ -13,6 +13,7 @@ package com.example.demofacturas.services;
 import com.example.demofacturas.models.Producto;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Esta clase representa al Servicio de Producto y debe ser usada para almacenar
@@ -28,5 +29,7 @@ public interface ProductoServicio {
     List<Producto> listarProductos();
 
     Producto crearProducto(Producto producto);
+
+    Optional<Producto> getById(String id);
 
 }
